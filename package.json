@@ -1,0 +1,24 @@
+{
+  "name": "sketch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "deeplearn": "^0.5.1",
+    "express": "^4.17.3",
+    "formidable": "^2.0.1",
+    "gaussian-convolution-kernel": "^1.0.0",
+    "get-pixels": "^3.3.3",
+    "ndarray": "^1.0.19",
+    "promise-file-reader": "^1.0.3",
+    "save-pixels": "^2.3.6",
+    "stream-to-promise": "^3.0.0"
+  }
+}
