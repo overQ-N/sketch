@@ -29,32 +29,28 @@ var initial = {
  * @param {image} File
  */
 
-const reader = new FileReader()
-const loadImage = (image) => {
-  const filename = image.name
+const loadImage = (dataUrl, name) => {
+  const filename = dataUrl.name || name
   return new Promise((resolve, reject) => {
-    console.log('image', image)
-    console.log(reader.readAsDataURL(image))
-    return
-    readAsDataURL(image).then(dataUrl => {
-      getPixels(dataUrl, (err, colorPixels) => {
-        const [originalWidth, originalHeight, ...rest] = colorPixels.shape
-        let [width, height] = [originalWidth, originalHeight]
-        const scaleFactor = Math.min(470 / width, 600 / height)
+    // readAsDataURL(image).then(dataUrl => {
+    getPixels(dataUrl, (err, colorPixels) => {
+      const [originalWidth, originalHeight, ...rest] = colorPixels.shape
+      let [width, height] = [originalWidth, originalHeight]
+      const scaleFactor = Math.min(470 / width, 600 / height)
 
-        if (scaleFactor < 1) {
-          width = originalWidth * scaleFactor
-          height = originalHeight * scaleFactor
-        }
+      if (scaleFactor < 1) {
+        width = originalWidth * scaleFactor
+        height = originalHeight * scaleFactor
+      }
 
-        initial = { ...initial, url: dataUrl, width, height, originalHeight, originalWidth, filename }
+      initial = { ...initial, url: dataUrl, width, height, originalHeight, originalWidth, filename }
 
-        convertToGrayscale(colorPixels).then(pixels => {
-          initial = { ...initial, pixels, rerendering: false, sketched: false, loading: false }
-          resolve()
-        })
+      convertToGrayscale(colorPixels).then(pixels => {
+        initial = { ...initial, pixels, rerendering: false, sketched: false, loading: false }
+        resolve()
       })
     })
+    // })
   })
 }
 const sketchify = async (options) => {
