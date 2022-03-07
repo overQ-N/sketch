@@ -25,6 +25,7 @@ var initial = {
   filename: null,
   loading: false
 }
+
 /**
  * @param {image} File
  */
@@ -34,6 +35,10 @@ const loadImage = (dataUrl, name) => {
   return new Promise((resolve, reject) => {
     // readAsDataURL(image).then(dataUrl => {
     getPixels(dataUrl, (err, colorPixels) => {
+      if (err) {
+        console.log('err', err)
+        return
+      }
       const [originalWidth, originalHeight, ...rest] = colorPixels.shape
       let [width, height] = [originalWidth, originalHeight]
       const scaleFactor = Math.min(470 / width, 600 / height)

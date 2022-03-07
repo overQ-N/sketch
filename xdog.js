@@ -1,4 +1,4 @@
-const { Array3D, Array4D, NDArrayMathCPU, NDArrayMathGPU, Scalar } = require('deeplearn')
+const { Array3D, Array4D, NDArrayMathCPU, NDArrayMathGPU, Scalar, setBackend } = require('deeplearn')
 const generateGuassianKernel = require('gaussian-convolution-kernel')
 const streamToPromise = require('stream-to-promise')
 const savePixels = require('save-pixels')
@@ -7,9 +7,10 @@ const ndarray = require('ndarray')
 // Convenience method for initializing scalars
 const s = n => Scalar.new(n)
 
-function convertToGrayscale (pixels) {
+function convertToGrayscale(pixels) {
   // const math = window.WebGLRenderingContext ? new NDArrayMathGPU() : new NDArrayMathCPU()
   const math = new NDArrayMathGPU()
+  console.log('math', math)
   const [width, height, channels] = pixels.shape
 
   const color = math.transpose(Array3D.new([height, width, channels], pixels.data), [1, 0, 2]).reshape(pixels.shape)
@@ -21,20 +22,21 @@ function convertToGrayscale (pixels) {
   return math.add(r, math.add(g, b)).data()
 }
 
-function calculateKernelSize (sigma) {
+function calculateKernelSize(sigma) {
   return Math.max(Math.round(sigma * 3) * 2 + 1, 3)
 }
 
-function guassianKernel (sigma) {
+function guassianKernel(sigma) {
   const ks = calculateKernelSize(sigma)
+  console.log('sigma', sigma)
   return Array4D.new([ks, ks, 1, 1], generateGuassianKernel(ks, sigma))
 }
 
-function applyConvolution (math, original, kernel) {
+function applyConvolution(math, original, kernel) {
   return math.conv2d(original, kernel, null, 1, 'same')
 }
 
-function DoGFilter (pixels, options, shape) {
+function DoGFilter(pixels, options, shape) {
   const { sigmaOne, sigmaTwo, threshold, gpuAccelerated } = options
   const math = gpuAccelerated ? (new NDArrayMathGPU()) : (new NDArrayMathCPU())
 
@@ -60,11 +62,11 @@ function DoGFilter (pixels, options, shape) {
   })
 }
 
-function softThreshold (math, pixels, phi, epsilon) {
+function softThreshold(math, pixels, phi, epsilon) {
   return math.tanh(math.multiply(s(phi), math.subtract(pixels, s(epsilon))))
 }
 
-function XDoGFilter (pixels, options, shape) {
+function XDoGFilter(pixels, options, shape) {
   const { sigmaOne, sigmaTwo, sharpen, epsilon, phi, gpuAccelerated } = options
   const math = gpuAccelerated ? (new NDArrayMathGPU()) : (new NDArrayMathCPU())
 
