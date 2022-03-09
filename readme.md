@@ -1,4 +1,6 @@
-### Compiling
+use NativeWebgl in Node.js without window
+
+### Compiling | to install `node-canvas`
 
 If you don't have a supported OS or processor architecture, or you use `--build-from-source`, the module will be compiled on your system. This requires several dependencies, including Cairo and Pango.
 

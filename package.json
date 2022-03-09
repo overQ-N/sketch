@@ -1,12 +1,14 @@
 {
-  "name": "sketch",
+  "name": "xdog-sketch-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "use NativeWebgl in Node.js without window",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "webgl node"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -14,16 +16,16 @@
     "bit-twiddle": "^1.0.2",
     "body-parser": "^1.19.2",
     "canvas": "^2.9.0",
-    "deeplearn": "^0.5.1",
+    "deeplearn": "0.3.11",
     "express": "^4.17.3",
     "formidable": "^2.0.1",
     "gaussian-convolution-kernel": "^1.0.0",
-    "get-pixels": "^3.3.3",
+    "get-pixels": "3.3.0",
     "gl": "^5.0.0",
-    "ndarray": "^1.0.19",
-    "node-image-filter": "^1.0.0",
-    "promise-file-reader": "^1.0.3",
-    "save-pixels": "^2.3.6",
-    "stream-to-promise": "^3.0.0"
+    "glsl-tokenizer": "^2.1.5",
+    "ndarray": "1.0.18",
+    "promise-file-reader": "1.0.0",
+    "save-pixels": "2.3.4",
+    "stream-to-promise": "2.2.0"
   }
 }
